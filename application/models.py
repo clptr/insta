@@ -8,24 +8,27 @@ class User(db.Model):
     username = db.Column(db.String(128), nullable=False)
     password = db.Column(db.String(128), nullable=False)
     proimg = db.Column(db.String(256), nullable=True)
-    name = db.Column(db.String(128), nullable=False)
+    fullname = db.Column(db.String(128), nullable=False)
     bio = db.Column(db.String(256), nullable=True)
-    relationships = db.relationship("Relationship", backref="user")
-    posts = db.relationship("Post", backref="user")
-    comments = db.relationship("Comment", backref="user")
-    likes = db.relationship("Like", backref="user")
+    join_date = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.Boolean, default=True)
+    # relationships = db.relationship("Relationship", backref="user")
+    # posts = db.relationship("Post", backref="user")
+    # comments = db.relationship("Comment", backref="user")
+    # likes = db.relationship("Like", backref="user")
 
-    def _repr_(self):
-        return f"user: {self.username}"
+    # def _repr_(self):
+    #     return f"user: {self.username}"
 
 
 class Relationship(db.Model):
 
     __tablename__ = "relationships"
     id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.String(256))
-    follower_id = db.Column(db.Integer, nullable=False)
-    following_id = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.Boolean, default=True)
+    follower_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    following_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    relation_date = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 class Post(db.Model):
@@ -34,17 +37,20 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image = db.Column(db.String(256), nullable=False)
     caption = db.Column(db.String(256), nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False) 
-    created_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow()) 
+    author_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False) 
+    status = db.Column(db.Boolean, default=True)
+    post_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow()) 
 
 
 class Comment(db.Model):
 
     __tablename__ = "comments"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    commenter_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey("posts.id"), nullable=False)
-    text = db.Column(db.String(256), nullable=False)
+    text = db.Column(db.Text, nullable=False)
+    comment_date = db.Column(db.DateTime, default=datetime.utcnow)
+    hidden = db.Column(db.Boolean, default=False)
 
 
 class Like(db.Model):
@@ -53,3 +59,5 @@ class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
+    status = db.Column(db.Boolean, default=True)
+    like_date = db.Column(db.DateTime, default=datetime.utcnow)
