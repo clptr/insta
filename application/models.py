@@ -1,24 +1,25 @@
+from flask_login import UserMixin
+
 from application import db
 from datetime import datetime
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(128), nullable=False)
     password = db.Column(db.String(128), nullable=False)
-    proimg = db.Column(db.String(256), nullable=True)
+    profile_pic = db.Column(db.String(256), nullable=True)
     fullname = db.Column(db.String(128), nullable=False)
+    email = db.Column(db.String(128), nullable=False)
     bio = db.Column(db.String(256), nullable=True)
     join_date = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.Boolean, default=True)
-    # relationships = db.relationship("Relationship", backref="user")
-    # posts = db.relationship("Post", backref="user")
-    # comments = db.relationship("Comment", backref="user")
-    # likes = db.relationship("Like", backref="user")
-
-    # def _repr_(self):
-    #     return f"user: {self.username}"
+    following_user = db.relationship("Relation", db.ForeignKey"Relationship.following_id", backref="following", lazy=True)
+    follower_user = db.relationship("Relation", db.ForeignKey"Relationship.follower_id", backref="follower", lazy=True)
+    posts = db.relationship("Post", backref="posts_owner", lazy=True)
+    comments = db.relationship("Comment", backref="comments_owner", lazy=True)
+    likes = db.relationship("Like", backref="likes_owner", lazy=True)
 
 
 class Relationship(db.Model):
@@ -40,6 +41,8 @@ class Post(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False) 
     status = db.Column(db.Boolean, default=True)
     post_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow()) 
+    comments = db.relationship("Comment", backref="commented", lazy=True)
+    likes = db.relationship("Like", backref="liked", lazy=True)
 
 
 class Comment(db.Model):
