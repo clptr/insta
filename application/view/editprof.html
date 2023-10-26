@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        div.container{
+            /* max-width: 600px; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        header{
+            width: 360px;
+            font-size: 10pt;
+            /* background-color: gray; */
+            text-align: center;
+            border-bottom: black 1.5px solid;
+        }
+
+        .divider {
+            border: 1px solid black;
+            margin: 0 -20px;
+        
+        }
+        .profile{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .circle{
+            width: 150px;
+            height: 150px;
+            border-radius: 75px;
+            background-color: aqua;
+            margin: 20px 0;
+        }
+        div.name{
+            margin: 20px 0;
+        }
+        .info-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .info-label {
+            width: 100px;
+            text-align: left;
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        .info-item>input{
+            height: 25px;
+        }
+        input[type="submit"] {
+            width: 17.5em;
+            background-color: lightseagreen;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Edit Post</h1>
+        </header>
+        <!-- <hr class="divider"> -->
+        <div class="profile">
+            <div class="circle"></div>
+            <p>Change Profile Picture</p>
+        </div>
+        <hr class="divider">
+        <div class="name">
+            <div class="info-item">
+                <label class="info-label">Name</label>
+                <input type="text" placeholder="">
+            </div>
+            <div class="info-item">
+                <label class="info-label">Username</label>
+                <input type="text" placeholder="">
+            </div>
+            <div class="info-item">
+                <label class="info-label">Bio</label>
+                <input type="text" placeholder="">
+            </div>
+        </div>
+        <input type="submit" value="Save Changes">
+    </div>
+</body>
+</html>
