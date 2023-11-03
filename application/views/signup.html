@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+
+            <fieldset>
+                <div class="form-group">
+                    {{ form.email.label }}
+                    {{ form.email(class="") }}
+
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.fullname.label }}
+                    {{ form.fullname(class="") }}
+
+                    {% if form.fullname.errors %}
+                        {% for error in form.fullname.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.username.label }}
+                    {{ form.username(class="") }}
+
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.password.label }}
+                    {{ form.password(class="") }}
+
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.password_Confirm.label }}
+                    {{ form.password_Confirm(class="") }}
+
+                    {% if form.password_Confirm.errors %}
+                        {% for error in form.password_Confirm.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </fieldset>
+
+            <div class="">
+                {{ form.submit(class="btn btn-outline-info") }}
+                <small class="">
+                    <a href="{{ url_for('login') }}">Sudah punya akun?</a>
+                </small>
+            </div>
+        </form>
+    </div>
+{% endblock content %}'

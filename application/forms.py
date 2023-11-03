@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf import FlaskForm, RecaptchaField
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, EmailField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, EmailField, BooleanField
 from wtforms.validators import DataRequired, Length, EqualTo, Email
 
 from application.utils import exists_email, not_exists_email, exists_username
@@ -9,7 +9,7 @@ from application.utils import exists_email, not_exists_email, exists_username
 class LoginForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), Length(min=4, max=8)])
     password = PasswordField("Password", validators=[DataRequired(), Length(min=1)])
-    remember_me = BooleanField('Remember Me')
+    # remember_me = BooleanField('Remember Me')
     submit = SubmitField("Log In")
 
 
@@ -51,7 +51,7 @@ class VerificationResetPasswordForm(FlaskForm):
 
 class CreatePostForm(FlaskForm):
     caption = TextAreaField('Caption')
-    image = FileField('Upload Image', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
+    post_pic = FileField('Upload Image', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     submit = SubmitField('Add Post')
 
 

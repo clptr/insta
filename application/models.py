@@ -15,8 +15,8 @@ class User(db.Model, UserMixin):
     bio = db.Column(db.String(256), nullable=True)
     join_date = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.Boolean, default=True)
-    following_user = db.relationship("Relation", db.ForeignKey"Relationship.following_id", backref="following", lazy=True)
-    follower_user = db.relationship("Relation", db.ForeignKey"Relationship.follower_id", backref="follower", lazy=True)
+    following_user = db.relationship("Relationship", foreign_keys="Relationship.following_id", backref="following", lazy=True)
+    follower_user = db.relationship("Relationship", foreign_keys="Relationship.follower_id", backref="follower", lazy=True)
     posts = db.relationship("Post", backref="posts_owner", lazy=True)
     comments = db.relationship("Comment", backref="comments_owner", lazy=True)
     likes = db.relationship("Like", backref="likes_owner", lazy=True)
@@ -61,6 +61,6 @@ class Like(db.Model):
     __tablename__ = "likes"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"), nullable=False)
     status = db.Column(db.Boolean, default=True)
     like_date = db.Column(db.DateTime, default=datetime.utcnow)
