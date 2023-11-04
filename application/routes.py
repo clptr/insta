@@ -9,7 +9,7 @@ from application.utils import save_image
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('profile'))
+        return redirect(url_for('index'))
 
     form = LoginForm()
 
@@ -20,7 +20,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and password == user.password:
             login_user(user)
-            return redirect(url_for('profile'))
+            return redirect(url_for('profile', username=username))
         else:
             flash('Invalid username or password', 'error')
 
@@ -41,9 +41,9 @@ def logout():
 @app.route('/<string:username>')
 @login_required
 def profile(username):
-    return render_template('profile.html', title=f'{current_user.fullname} Profile')
-
-
+    posts = current_user.posts
+    reverse_posts = posts[::-1]
+    return render_template('profile.html', title=f'{current_user.fullname} Profile', posts=reverse_posts)
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required
@@ -63,11 +63,25 @@ def index():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.filter_by(author_id = current_user.id).order_by(Post.post_date.desc()).paginate(page=page, per_page=3)
 
+    # posts = current_user.posts
+
     return render_template('index.html', title='Home', form=form, posts=posts)
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignUpForm()
+
+    if form.validate_on_submit():
+        user = User(
+            username = form.username.data,
+            password = form.password.data,
+            fullname = form.fullname.data,
+            email = form.email.data
+        )
+        db.session.add(user)
+        db.session.commit()
+        return redirect('index.html')
+        
     return render_template('signup.html', title='Signup', form=form)
 
 @app.route('/about')

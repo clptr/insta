@@ -38,8 +38,8 @@ def load_user(user_id):
 
 def save_image(form_picture_data):
     random_hex = secrets.token_hex(5)
-    _, f_ext = os.path.splitext(form_picture_data.filename)
-    picture_fn = 'images/posts'+random_hex+f_ext
+    f_name, f_ext = os.path.splitext(form_picture_data.filename)
+    picture_fn = 'images/posts/'+random_hex+f_ext
     picture_path = os.path.join(current_app.root_path, 'static/', picture_fn)
 
     image = Image.open(form_picture_data)
