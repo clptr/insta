@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+
+            <fieldset>
+                <div class="form-group">
+                    {{ form.username.label }}
+                    {{ form.username(class="") }}
+
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.fullname.label }}
+                    {{ form.fullname(class="") }}
+
+                    {% if form.fullname.errors %}
+                        {% for error in form.fullname.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.bio.label }}
+                    {{ form.bio(class="") }}
+
+                    {% if form.bio.errors %}
+                        {% for error in form.bio.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.profile_pic.label(class="form-control-label") }}
+                    {{ form.profile_pic(class="form-control-file") }}
+                    {% for error in form.profile_pic.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+            </fieldset>
+
+            <div class="">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+{% endblock content %}'

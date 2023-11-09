@@ -35,7 +35,6 @@ def load_user(user_id):
 
 
 # IMAGE SAVE UTILS
-
 def save_image(form_picture_data):
     random_hex = secrets.token_hex(5)
     f_name, f_ext = os.path.splitext(form_picture_data.filename)
@@ -50,3 +49,4 @@ def save_image(form_picture_data):
     image.save(picture_path)
 
     return picture_fn
+# END OF IMAGE SAVE UTILS

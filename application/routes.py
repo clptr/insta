@@ -80,9 +80,34 @@ def signup():
         )
         db.session.add(user)
         db.session.commit()
-        return redirect('index.html')
+        return redirect('login.html')
         
     return render_template('signup.html', title='Signup', form=form)
+
+@app.route('/edit', methods=['GET', 'POST'])
+@login_required
+def edit():
+    form = EditProfileForm()
+
+    if form.validate_on_submit():
+        user = User.query.get(current_user.id)
+        if form.username.data != user.username:
+            user.username = form.username.data
+        user.fullname = form.fullname.data
+        user.bio = form.bio.data
+
+        if form.profile_pic.data:
+            pass
+        
+        db.session.commit()
+        flash("profile updated", 'success')
+        return redirect(url_for('profile', username=current_user.username))
+        
+    form.username.data = current_user.username
+    form.fullname.data = current_user.fullname
+    form.bio.data = current_user.bio
+
+    return render_template('edit.html', title="Edit {current_user.username} Profile", form=form)
 
 @app.route('/about')
 def about():
