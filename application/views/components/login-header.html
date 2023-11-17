@@ -1,3 +1,5 @@
+
+
 <header>
     <img src="#" alt="logo">
     <ul>
@@ -8,8 +10,12 @@
             <a href="{{ url_for('profile', username=current_user.username)}}">Profile</a>
         </li>
         <li>
+            <a href="{{ url_for('about') }}">About</a>
+        </li>
+        <li>
             <a href="{{ url_for('logout') }}">Logout</a>
         </li>
+        
         
     </ul>
 </header>

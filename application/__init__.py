@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_cors import CORS
 # from flask_session import Session
 from dotenv import load_dotenv
 import os
@@ -20,6 +21,7 @@ app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=30)
 # Session(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+cors = CORS(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = "login"

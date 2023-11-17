@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <div class="">
+    <div class="login">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="">
                 <legend class="">Login</legend>
 
-                <div class="">
+                <div class="form-login">
                     {{ form.username.label(class="") }}
 
                     {% if form.username.errors %}
@@ -22,7 +22,7 @@
                     {% endif %}
                 </div>
 
-                <div class="">
+                <div class="form-login">
                     {{ form.password.label(class="") }}
 
                     {% if form.password.errors %}
@@ -37,13 +37,13 @@
                     {% endif %}
                 </div>
             </fieldset>
-            <div class="">
+            <div class="submit-login">
                 {{ form.submit(class="btn-outline-info") }}
-                <small class="">
-                    <a href="#">Lupa kata sandi ?</a>
+                <small class="h">
+                    <a href="{{ url_for('forgotPass') }}">Lupa kata sandi ?</a>
                 </small>
         `   </div>
-            <small class="">
+            <small class="h">
                 <a href="{{ url_for('signup') }}">Belum punya akun ?</a>
             </small>
         </form>

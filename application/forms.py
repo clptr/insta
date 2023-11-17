@@ -33,9 +33,9 @@ class EditProfileForm(SignUpForm):
 
 
 class ResetPasswordForm(FlaskForm):
-    old_password = PasswordField("old_password", validators=[DataRequired(), Length(min=8)])
-    new_password = PasswordField("new_password", validators=[DataRequired(), Length(min=8)])
-    confirm_new_password = PasswordField("confirm new password", validators=[DataRequired(), Length(min=8), EqualTo("new_password")])
+    old_password = PasswordField("old_password", validators=[DataRequired(), Length(min=6)])
+    new_password = PasswordField("new_password", validators=[DataRequired(), Length(min=6)])
+    confirm_new_password = PasswordField("confirm new password", validators=[DataRequired(), Length(min=6), EqualTo("new_password")])
     submit = SubmitField("Reset password")
 
 
@@ -58,6 +58,6 @@ class CreatePostForm(FlaskForm):
 
 class EditPostForm(FlaskForm):
     caption = TextAreaField('Caption')
-    # image = FileField('Edit Image')
+    image = FileField('Edit Image')
     submit = SubmitField('Save Changes')
 

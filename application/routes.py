@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, make_response, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 
 from application import app
@@ -96,9 +96,10 @@ def edit():
         user.fullname = form.fullname.data
         user.bio = form.bio.data
 
+
         if form.profile_pic.data:
             pass
-        
+
         db.session.commit()
         flash("profile updated", 'success')
         return redirect(url_for('profile', username=current_user.username))
@@ -112,3 +113,68 @@ def edit():
 @app.route('/about')
 def about():
     return render_template('about.html', title='About')
+
+@app.route('/respass', methods=['GET', 'POST'])
+@login_required
+def respass():
+    form = ResetPasswordForm()
+
+    if form.validate_on_submit():
+        user = User.query.get(current_user.id)
+        if user.password != form.old_password.data:
+            flash("ur old password is wrong", "error")
+            return redirect(url_for("respass"))
+        user.password = form.new_password.data
+        user.password_Confirm = form.confirm_new_password.data
+
+        if form.old_password.data == form.new_password.data:
+            flash("ur password is the same as the old one", "error")
+            return redirect(url_for("respass"))
+
+        db.session.commit()
+        flash("password has been reset", 'success')
+        return redirect(url_for('profile', username=current_user.username))
+    
+    return render_template('resetpass.html', title='ResetPassword', form=form)
+
+
+@app.route('/like', methods=['GET', 'POST'])
+@login_required
+def like():
+    data = request.json
+    post_id = int(data['postId'])
+    like = Like.query.filter_by(user_id=current_user.id,post_id=post_id).first()
+    if not like:
+        like = Like(user_id=current_user.id, post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+        return make_response(jsonify({"status" : True}), 200)
+    
+    db.session.delete(like)
+    db.session.commit()
+    return make_response(jsonify({"status" : False}), 200)
+
+@app.route('/edit_post/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def edit_post(post_id):
+    form = EditPostForm()
+
+    post = Post.query.get(post_id)
+    if form.validate_on_submit():
+        post.caption = form.caption.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('index', username=current_user.username))
+
+    elif request.method == 'GET':
+        form.caption.data = post.caption
+
+    return render_template('edit_post.html', title='Edit Post', form=form, post=post)
+
+@app.route('/forgotPass', methods=['GET', 'POST'])
+def forgotPass():
+    form = ForgotPasswordForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        email = User.query.filter_by(email=email)
+    return render_template('forgotpass.html', title='Forgot Password', form=form)

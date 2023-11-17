@@ -4,39 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        *{
-            margin: 0px;
+        * {
             padding: 0px;
+            margin: 0px;
             box-sizing: border-box;
         }
-        body{
+
+        body {
             padding: 20px;
         }
-        section.content{
+
+        section.content {
             min-height: calc(100vh - 100px);
-            width: 576px;
+            width: 450px;
             margin: 0px auto;
         }
-        header ul li{
+
+        header ul li {
             display: inline-block;
         }
-        div.new-post-box{
+
+        a{
+            font-weight: 600;
+        }
+
+        ul{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            padding : 10px 10px;
+            /* padding-top: 10px; */
+            font-weight: 600;
+            /* padding-bottom: 10px; */
+        }
+
+
+        div.new-post-box {
             padding: 5px;
         }
-        div.post-container{
-            border: 1px solid black;
+
+        div.post-container {
+            /* border: 1px solid black; */
             margin: 50px auto;
             text-align: center;
+            padding: 5px;
         }
+
         img {
-            width: 500px;
+            width: 420px;
         }
-        div.pagination-box{
+
+        .logo{
+            width: 50px;
+            height: 50px;
+        }
+        .image-item{
+            width: 50px;
+            height: 130px;
+        }
+
+        div.pagination-box {
             border: 1px solid black;
             text-align: center;
             padding: 5px;
             margin-bottom: 30px;
         }
+
         .image-container {
             display: flex;
             flex-wrap: wrap;
@@ -94,6 +127,51 @@
         .profile-info p {
             margin: 5px 0;
         }
+
+        .post {
+            /* background-color: cyan; */
+            margin: 5px 10px;
+            padding: 0px 15px;
+        }
+
+        .post-header, .post-footer {
+            display: flex;
+            gap: 10px;
+        }
+
+        .post-header img {
+            border-radius: 50%;
+        }
+        input[type=text], input[type=password], input[type=email] {   
+            width: 100%;   
+            margin: 7px 0;  
+            padding: 12px 20px;   
+            display: inline-block;   
+            border: 1px solid gray;   
+            box-sizing: border-box;   
+            }  
+        input[type=submit]{
+            width: 100%;
+            margin: 7px 0;  
+            padding: 12px 20px;   
+            display: inline-block;   
+            border: 1px solid #5CA2E2;   
+            color: white;
+            box-sizing: border-box;  
+            background-color: #5CA2E2; 
+        }
+
+        div.container > h1{
+            font-size: 35px;
+            padding: 5px 0;
+            text-align: center;
+        }
+
+        div.container > p{
+            font-size: 25px;
+            padding: 5px 0;
+        }
+
     </style>
     {% if title %}
         <title>{{ title }} - Website</title>
