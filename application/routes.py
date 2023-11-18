@@ -100,6 +100,7 @@ def edit():
         if form.profile_pic.data:
             pass
 
+
         db.session.commit()
         flash("profile updated", 'success')
         return redirect(url_for('profile', username=current_user.username))
